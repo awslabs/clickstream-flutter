@@ -1,17 +1,14 @@
-## My Project
+# clickstream_flutter
 
-TODO: Fill this README out!
+clickstream flutter SDK
 
-Be sure to:
+## Getting Started
 
-* Change the title in this README
-* Edit your repository description on GitHub
+This project is a starting point for a Flutter
+[plug-in package](https://flutter.dev/developing-packages/),
+a specialized package that includes platform-specific implementation code for
+Android and/or iOS.
 
-## Security
-
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
-
-## License
-
-This project is licensed under the Apache-2.0 License.
-
+For help getting started with Flutter development, view the
+[online documentation](https://flutter.dev/docs), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
