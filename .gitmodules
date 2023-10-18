@@ -1,0 +1,3 @@
+[submodule "ios/Clickstream"]
+	path = ios/Clickstream
+	url = https://github.com/awslabs/clickstream-swift

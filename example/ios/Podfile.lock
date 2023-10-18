@@ -1,0 +1,50 @@
+PODS:
+  - Amplify (1.30.3):
+    - Amplify/Default (= 1.30.3)
+  - Amplify/Default (1.30.3)
+  - clickstream_analytics (0.0.1):
+    - clickstream_analytics/Clickstream (= 0.0.1)
+    - Flutter
+  - clickstream_analytics/Clickstream (0.0.1):
+    - Amplify (= 1.30.3)
+    - Flutter
+    - GzipSwift (= 5.1.1)
+    - SQLite.swift (= 0.13.2)
+  - Flutter (1.0.0)
+  - GzipSwift (5.1.1)
+  - integration_test (0.0.1):
+    - Flutter
+  - SQLite.swift (0.13.2):
+    - SQLite.swift/standard (= 0.13.2)
+  - SQLite.swift/standard (0.13.2)
+
+DEPENDENCIES:
+  - clickstream_analytics (from `.symlinks/plugins/clickstream_analytics/ios`)
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Amplify
+    - GzipSwift
+    - SQLite.swift
+
+EXTERNAL SOURCES:
+  clickstream_analytics:
+    :path: ".symlinks/plugins/clickstream_analytics/ios"
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+SPEC CHECKSUMS:
+  Amplify: 516e5da5f256f62841b6bc659e1644bc999d7b6e
+  clickstream_analytics: 22312ed8d353813f1f6847aecb4e04b62bdda478
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+  SQLite.swift: 4fc2be46c36392e3b87afe6fe7f1801c1daa07ef
+
+PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+
+COCOAPODS: 1.13.0

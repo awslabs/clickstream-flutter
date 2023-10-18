@@ -1,0 +1,25 @@
+name: Flutter SDK Build for iOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-ios:
+    runs-on: macos-13-xl
+    steps:
+      - uses: actions/checkout@v3
+      - name: Initialize submodules
+        run: |
+          git submodule update --init
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          architecture: x64
+      - name: Run build ios
+        run: |
+          flutter pub get
+          cd example
+          flutter build ios --release --no-codesign

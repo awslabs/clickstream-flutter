@@ -1,0 +1,25 @@
+name: Flutter SDK Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  code-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Run test
+        run: |
+          flutter pub get
+          flutter test --coverage --reporter github
+      - name: Upload Test Report
+        uses: codecov/codecov-action@v3
+        with:
+          name: report
+          files: coverage/lcov.info

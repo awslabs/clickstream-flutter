@@ -1,0 +1,9 @@
+*.iml
+test
+coverage
+build
+android/src/test
+ios/Clickstream/*
+!ios/Clickstream/Sources
+example/integration_test
+example/test
