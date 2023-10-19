@@ -6,23 +6,29 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockClickstreamFlutterPlatform
     with MockPlatformInterfaceMixin
-    implements ClickstreamFlutterPlatform {
-
+    implements ClickstreamAnalytics {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<bool> init() => Future.value(true);
+
+  @override
+  Future<void> record(String name) => Future.value();
 }
 
 void main() {
-  final ClickstreamFlutterPlatform initialPlatform = ClickstreamFlutterPlatform.instance;
+  final ClickstreamAnalytics initialPlatform = ClickstreamAnalytics.instance;
 
-  test('$MethodChannelClickstreamFlutter is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelClickstreamFlutter>());
+  test('$MethodChannelClickstreamAnalytics is the default instance', () {
+    expect(initialPlatform, isInstanceOf<MethodChannelClickstreamAnalytics>());
   });
 
   test('getPlatformVersion', () async {
     ClickstreamFlutter clickstreamFlutterPlugin = ClickstreamFlutter();
-    MockClickstreamFlutterPlatform fakePlatform = MockClickstreamFlutterPlatform();
-    ClickstreamFlutterPlatform.instance = fakePlatform;
+    MockClickstreamFlutterPlatform fakePlatform =
+        MockClickstreamFlutterPlatform();
+    ClickstreamAnalytics.instance = fakePlatform;
 
     expect(await clickstreamFlutterPlugin.getPlatformVersion(), '42');
   });

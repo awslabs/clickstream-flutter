@@ -5,7 +5,7 @@ import 'package:clickstream_flutter/clickstream_flutter_method_channel.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  MethodChannelClickstreamFlutter platform = MethodChannelClickstreamFlutter();
+  MethodChannelClickstreamAnalytics platform = MethodChannelClickstreamAnalytics();
   const MethodChannel channel = MethodChannel('clickstream_flutter');
 
   setUp(() {
