@@ -15,11 +15,10 @@ import 'package:clickstream_flutter/clickstream_flutter.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
-    final ClickstreamFlutter plugin = ClickstreamFlutter();
-    final String? version = await plugin.getPlatformVersion();
-    // The version string depends on the host platform running the test, so
-    // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+  testWidgets('test init SDK success', (WidgetTester tester) async {
+    final ClickstreamAnalytics analytics = ClickstreamAnalytics();
+    final bool result = await analytics.init(
+        appId: "testAppId", endpoint: "https://example.com/collect");
+    expect(result, true);
   });
 }
