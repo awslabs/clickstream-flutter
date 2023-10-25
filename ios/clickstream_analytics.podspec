@@ -1,17 +1,17 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint clickstream_flutter.podspec` to validate before publishing.
+# Run `pod lib lint clickstream_analytics.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'clickstream_flutter'
+  s.name             = 'clickstream_analytics'
   s.version          = '0.0.1'
   s.summary          = 'clickstream flutter SDK'
   s.description      = <<-DESC
 clickstream flutter SDK
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/awslabs/clickstream-flutter'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'AWS GCR Solutions Team' => 'aws-gcr-solutions@amazon.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'

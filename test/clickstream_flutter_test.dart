@@ -1,6 +1,9 @@
-import 'package:clickstream_flutter/clickstream_flutter.dart';
-import 'package:clickstream_flutter/clickstream_flutter_method_channel.dart';
-import 'package:clickstream_flutter/clickstream_flutter_platform_interface.dart';
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import 'package:clickstream_analytics/clickstream_analytics.dart';
+import 'package:clickstream_analytics/clickstream_analytics_method_channel.dart';
+import 'package:clickstream_analytics/clickstream_analytics_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 

@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'dart:async';
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
-import 'package:flutter/services.dart';
-import 'package:clickstream_flutter/clickstream_flutter.dart';
+import 'package:clickstream_analytics/clickstream_analytics.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,24 +23,12 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    // We also handle the message potentially returning null.
-    try {
-      platformVersion = 'Unknown platform version';
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
+  void log(String message) {
+    if (kDebugMode) {
+      print(message);
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
   }
 
   @override
@@ -55,12 +44,12 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.not_started_outlined),
               title: const Text('initSDK'),
               onTap: () async {
-                var result = await analytics.init(
+                bool result = await analytics.init(
                     appId: "shopping",
                     endpoint: testEndpoint,
                     isLogEvents: true,
                     isCompressEvents: false);
-                print("init SDK result is:$result");
+                log("init SDK result is:$result");
               },
               minLeadingWidth: 0,
             ),
@@ -78,7 +67,7 @@ class _MyAppState extends State<MyApp> {
                   "boolValue": true,
                   "value": 279.9
                 });
-                print("recorded testEvent and testEventWithName");
+                log("recorded testEvent and testEventWithName");
               },
               minLeadingWidth: 0,
             ),
@@ -88,7 +77,7 @@ class _MyAppState extends State<MyApp> {
               onTap: () async {
                 analytics.setUserId("12345");
                 analytics.setUserId(null);
-                print("setUserId");
+                log("setUserId");
               },
               minLeadingWidth: 0,
             ),
@@ -100,7 +89,7 @@ class _MyAppState extends State<MyApp> {
                     {"category": 'shoes', "currency": 'CNY', "value": 279.9});
                 analytics.setUserAttributes({});
                 analytics.setUserAttributes({"testNull": null});
-                print("setUserAttributes");
+                log("setUserAttributes");
               },
               minLeadingWidth: 0,
             ),
@@ -114,7 +103,7 @@ class _MyAppState extends State<MyApp> {
                   "isTrue": true,
                   "Score": 24.32
                 });
-                print("addGlobalAttributes");
+                log("addGlobalAttributes");
               },
               minLeadingWidth: 0,
             ),
@@ -123,7 +112,7 @@ class _MyAppState extends State<MyApp> {
               title: const Text('deleteGlobalAttributes'),
               onTap: () async {
                 analytics.deleteGlobalAttributes(["Score", "_channel"]);
-                print("deleteGlobalAttributes Score and _channel");
+                log("deleteGlobalAttributes Score and _channel");
               },
               minLeadingWidth: 0,
             ),
@@ -140,7 +129,7 @@ class _MyAppState extends State<MyApp> {
                     authCookie: "test cookie",
                     isTrackScreenViewEvents: false);
                 analytics.updateConfigure();
-                print("updateConfigure");
+                log("updateConfigure");
               },
               minLeadingWidth: 0,
             ),
@@ -149,7 +138,7 @@ class _MyAppState extends State<MyApp> {
               title: const Text('flushEvents'),
               onTap: () async {
                 analytics.flushEvents();
-                print("flushEvents");
+                log("flushEvents");
               },
               minLeadingWidth: 0,
             ),

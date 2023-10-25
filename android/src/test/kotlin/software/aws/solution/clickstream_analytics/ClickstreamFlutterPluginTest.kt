@@ -1,4 +1,4 @@
-package software.aws.solution.clickstream_flutter
+package software.aws.solution.clickstream_analytics
 
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel

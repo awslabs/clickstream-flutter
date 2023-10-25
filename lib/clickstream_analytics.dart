@@ -1,4 +1,7 @@
-import 'clickstream_flutter_platform_interface.dart';
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import 'clickstream_analytics_platform_interface.dart';
 
 class ClickstreamAnalytics {
   Future<bool> init({

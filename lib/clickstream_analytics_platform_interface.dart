@@ -1,6 +1,9 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-import 'clickstream_flutter_method_channel.dart';
+import 'clickstream_analytics_method_channel.dart';
 
 abstract class ClickstreamInterface extends PlatformInterface {
   /// Constructs a ClickstreamAnalytics.

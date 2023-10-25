@@ -1,16 +1,10 @@
-// This is a basic Flutter integration test.
-//
-// Since integration tests run in a full Flutter application, they can interact
-// with the host side of a plugin implementation, unlike Dart unit tests.
-//
-// For more information about Flutter integration tests, please see
-// https://docs.flutter.dev/cookbook/testing/integration/introduction
-
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:clickstream_flutter/clickstream_flutter.dart';
+import 'package:clickstream_analytics/clickstream_analytics.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();

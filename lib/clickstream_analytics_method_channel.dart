@@ -1,7 +1,10 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'clickstream_flutter_platform_interface.dart';
+import 'clickstream_analytics_platform_interface.dart';
 
 /// An implementation of [ClickstreamFlutterPlatform] that uses method channels.
 class ClickstreamAnalyticsMethodChannel extends ClickstreamInterface {
@@ -37,7 +40,8 @@ class ClickstreamAnalyticsMethodChannel extends ClickstreamInterface {
 
   @override
   Future<void> deleteGlobalAttributes(Map<String, Object?> attributes) async {
-    await methodChannel.invokeMethod<void>('deleteGlobalAttributes', attributes);
+    await methodChannel.invokeMethod<void>(
+        'deleteGlobalAttributes', attributes);
   }
 
   @override
