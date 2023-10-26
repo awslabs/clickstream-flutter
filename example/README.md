@@ -1,4 +1,4 @@
-# clickstream_flutter_example
+# Clickstream Flutter SDK Example
 
 Demonstrates how to use the clickstream_flutter plugin.
 

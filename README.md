@@ -2,9 +2,9 @@
 
 ## Introduction
 
-Clickstream Flutter SDK can help you easily collect and report events from browser to AWS. This SDK is part of an AWS solution - [Clickstream Analytics on AWS](https://github.com/awslabs/clickstream-analytics-on-aws), which provisions data pipeline to ingest and process event data into AWS services such as S3, Redshift.
+Clickstream Flutter SDK can help you easily collect and report events from your mobile app to AWS. This SDK is part of an AWS solution - [Clickstream Analytics on AWS](https://github.com/awslabs/clickstream-analytics-on-aws), which provisions data pipeline to ingest and process event data into AWS services such as S3, Redshift.
 
-The SDK relies on the [Clickstream Android SDK](https://github.com/awslabs/clickstream-android) and [Clickstream Swift SDK](https://github.com/awslabs/clickstream-swift). Therefore, flutter SDK also supports automatically collect common user events and attributes (e.g., session start, first open) In addition, we've added easy-to-use APIs to simplify data collection in Flutter apps.
+The SDK relies on the [Clickstream Android SDK](https://github.com/awslabs/clickstream-android) and [Clickstream Swift SDK](https://github.com/awslabs/clickstream-swift). Therefore, flutter SDK also supports automatically collect common user events and attributes (e.g., session start, first open). In addition, we've added easy-to-use APIs to simplify data collection in Flutter apps.
 
 ## Integrate SDK
 
@@ -135,8 +135,8 @@ You can update the default configuration after initializing the SDK, below are t
 ```dart
 final analytics = ClickstreamAnalytics();
 analytics.updateConfigure(
-		appId: "your appId",
-  	endpoint: "https://example.com/collect",
+    appId: "your appId",
+    endpoint: "https://example.com/collect",
     isLogEvents: true,
     isCompressEvents: false,
     isTrackScreenViewEvents: false
@@ -157,8 +157,22 @@ analytics.flushEvents();
 
 ### Build
 
+Install flutter packages
+
 ```bash
 flutter pub get
+```
+
+Build for Android 
+
+```bash
+cd example && flutter build apk
+```
+
+Build for iOS
+
+```dart
+cd example && flutter build ios
 ```
 
 ### Format and lint
