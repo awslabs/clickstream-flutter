@@ -47,7 +47,8 @@ abstract class ClickstreamInterface extends PlatformInterface {
   }
 
   Future<void> deleteGlobalAttributes(Map<String, Object?> attributes) {
-    throw UnimplementedError('deleteGlobalAttributes() has not been implemented.');
+    throw UnimplementedError(
+        'deleteGlobalAttributes() has not been implemented.');
   }
 
   Future<void> updateConfigure(Map<String, Object?> configure) {

@@ -141,7 +141,8 @@ class _MyAppState extends State<MyApp> {
                 log("flushEvents");
               },
               minLeadingWidth: 0,
-            ),ListTile(
+            ),
+            ListTile(
               leading: const Icon(Icons.disabled_by_default),
               title: const Text('disable'),
               onTap: () async {
@@ -149,7 +150,8 @@ class _MyAppState extends State<MyApp> {
                 log("disable");
               },
               minLeadingWidth: 0,
-            ),ListTile(
+            ),
+            ListTile(
               leading: const Icon(Icons.check),
               title: const Text('enable'),
               onTap: () async {
