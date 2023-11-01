@@ -95,6 +95,14 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
                 ClickstreamAnalytics.flushEvents()
             }
 
+            "disable" -> {
+                ClickstreamAnalytics.disable()
+            }
+
+            "enable" -> {
+                ClickstreamAnalytics.enable()
+            }
+
             else -> {
                 result.notImplemented()
             }

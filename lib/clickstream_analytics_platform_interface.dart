@@ -39,22 +39,30 @@ abstract class ClickstreamInterface extends PlatformInterface {
   }
 
   Future<void> setUserAttributes(Map<String, Object?> attributes) {
-    throw UnimplementedError('setUserId() has not been implemented.');
+    throw UnimplementedError('setUserAttributes() has not been implemented.');
   }
 
   Future<void> addGlobalAttributes(Map<String, Object?> attributes) {
-    throw UnimplementedError('setUserId() has not been implemented.');
+    throw UnimplementedError('addGlobalAttributes() has not been implemented.');
   }
 
   Future<void> deleteGlobalAttributes(Map<String, Object?> attributes) {
-    throw UnimplementedError('setUserId() has not been implemented.');
+    throw UnimplementedError('deleteGlobalAttributes() has not been implemented.');
   }
 
   Future<void> updateConfigure(Map<String, Object?> configure) {
-    throw UnimplementedError('setUserId() has not been implemented.');
+    throw UnimplementedError('updateConfigure() has not been implemented.');
   }
 
   Future<void> flushEvents() {
-    throw UnimplementedError('setUserId() has not been implemented.');
+    throw UnimplementedError('flushEvents() has not been implemented.');
+  }
+
+  Future<void> disable() {
+    throw UnimplementedError('disable() has not been implemented.');
+  }
+
+  Future<void> enable() {
+    throw UnimplementedError('enable() has not been implemented.');
   }
 }

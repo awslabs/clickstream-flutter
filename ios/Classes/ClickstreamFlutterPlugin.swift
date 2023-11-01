@@ -36,6 +36,10 @@ public class ClickstreamFlutterPlugin: NSObject, FlutterPlugin {
             updateConfigure(call.arguments as! [String: Any])
         case "flushEvents":
             ClickstreamAnalytics.flushEvents()
+        case "disable":
+            ClickstreamAnalytics.disable()
+        case "enable":
+            ClickstreamAnalytics.enable()
         default:
             result(FlutterMethodNotImplemented)
         }
