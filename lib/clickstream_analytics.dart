@@ -85,4 +85,12 @@ class ClickstreamAnalytics {
   Future<void> flushEvents() {
     return ClickstreamInterface.instance.flushEvents();
   }
+
+  Future<void> disable() {
+    return ClickstreamInterface.instance.disable();
+  }
+
+  Future<void> enable() {
+    return ClickstreamInterface.instance.enable();
+  }
 }

@@ -6,6 +6,8 @@ Clickstream Flutter SDK can help you easily collect and report events from your 
 
 The SDK relies on the [Clickstream Android SDK](https://github.com/awslabs/clickstream-android) and [Clickstream Swift SDK](https://github.com/awslabs/clickstream-swift). Therefore, flutter SDK also supports automatically collect common user events and attributes (e.g., session start, first open). In addition, we've added easy-to-use APIs to simplify data collection in Flutter apps.
 
+Visit our [Documentation site](https://awslabs.github.io/clickstream-analytics-on-aws/en/sdk-manual/flutter/) to learn more about Clickstream Flutter SDK.
+
 ## Integrate SDK
 
 ### Include SDK
@@ -81,7 +83,7 @@ analytics.setUserAttributes({
 });
 ```
 
-When opening for the first time after integrating the SDK, you need to manually set the user attributes once, and current login user's attributes will be cached in native disk, so the next time browser open you don't need to set all user's attribute again, of course you can use the same api `analytics.setUserAttributes()` to update the current user's attribute when it changes.
+Current login user's attributes will be cached in disk, so the next time app launch you don't need to set all user's attribute again, of course you can use the same api `analytics.setUserAttributes()` to update the current user's attribute when it changes.
 
 #### Add global attribute
 
@@ -91,6 +93,9 @@ analytics.addGlobalAttributes({
   "_traffic_source_name": "Summer promotion",
   "level": 10
 });
+
+// delete global attribute
+analytics.deleteGlobalAttributes(["level"]);
 ```
 
 It is recommended to set global attributes after each SDK initialization, global attributes will be included in all events that occur after it is set.
@@ -106,7 +111,7 @@ analytics.init(
   endpoint: "https://example.com/collect",
   isLogEvents: false,
   isCompressEvents: false,
-  sendEventsInterval: 5000,
+  sendEventsInterval: 10000,
   isTrackScreenViewEvents: true,
   isTrackUserEngagementEvents: true,
   isTrackAppExceptionEvents: false,
@@ -115,10 +120,10 @@ analytics.init(
 );
 ```
 
-Here is an explanation of each property:
+Here is an explanation of each option:
 
 - **appId (Required)**: the app id of your project in control plane.
-- **endpoint (Required)**: the endpoint path you will upload the event to AWS server.
+- **endpoint (Required)**: the endpoint path you will upload the event to Clickstream ingestion server.
 - **isLogEvents**: whether to print out event json for debugging, default is false.
 - **isCompressEvents**: whether to compress event content when uploading events, default is `true`
 - **sendEventsInterval**: event sending interval millisecond, works only bath send mode, the default value is `5000`
@@ -151,6 +156,21 @@ analytics.updateConfigure(
 ```dart
 final analytics = ClickstreamAnalytics();
 analytics.flushEvents();
+```
+
+#### Disable SDK
+
+You can disable the SDK in the scenario you need. After disabling the SDK, the SDK will not handle the logging and
+sending of any events. Of course, you can enable the SDK when you need to continue logging events.
+
+```dart
+final analytics = ClickstreamAnalytics();
+
+// disable SDK
+analytics.disable();
+
+// enable SDK
+analytics.enable();
 ```
 
 ## How to build and test locally

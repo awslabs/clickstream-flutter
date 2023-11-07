@@ -53,4 +53,14 @@ class ClickstreamAnalyticsMethodChannel extends ClickstreamInterface {
   Future<void> flushEvents() async {
     await methodChannel.invokeMethod<void>('flushEvents');
   }
+
+  @override
+  Future<void> disable() async {
+    await methodChannel.invokeMethod<void>('disable');
+  }
+
+  @override
+  Future<void> enable() async {
+    await methodChannel.invokeMethod<void>('enable');
+  }
 }

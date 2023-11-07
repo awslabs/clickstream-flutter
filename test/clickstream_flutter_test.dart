@@ -37,6 +37,12 @@ class MockClickstreamFlutterPlatform
   @override
   Future<void> deleteGlobalAttributes(Map<String, Object?> attributes) =>
       Future.value();
+
+  @override
+  Future<void> disable() => Future.value();
+
+  @override
+  Future<void> enable() => Future.value();
 }
 
 void main() {
@@ -115,6 +121,16 @@ void main() {
 
   test('flushEvents', () async {
     var result = analytics.flushEvents();
+    expect(result, isNotNull);
+  });
+
+  test('disable', () async {
+    var result = analytics.disable();
+    expect(result, isNotNull);
+  });
+
+  test('enable', () async {
+    var result = analytics.enable();
     expect(result, isNotNull);
   });
 }

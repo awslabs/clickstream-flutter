@@ -38,6 +38,10 @@ void main() {
             return null;
           case "flushEvents":
             return null;
+          case "disable":
+            return null;
+          case "enable":
+            return null;
         }
         return null;
       },
@@ -89,7 +93,7 @@ void main() {
     expect(result, isNotNull);
   });
 
-  test('setGlobalAttributes', () async {
+  test('addGlobalAttributes', () async {
     Map<String, Object?> attributes = {
       "channel": "Play Store",
       "level": 5.1,
@@ -116,8 +120,18 @@ void main() {
     expect(result, isNotNull);
   });
 
-  test('setGlobalAttributes', () async {
+  test('flushEvents', () async {
     var result = platform.flushEvents();
+    expect(result, isNotNull);
+  });
+
+  test('disable', () async {
+    var result = platform.disable();
+    expect(result, isNotNull);
+  });
+
+  test('enable', () async {
+    var result = platform.enable();
     expect(result, isNotNull);
   });
 }
