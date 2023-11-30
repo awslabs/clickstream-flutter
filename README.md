@@ -30,10 +30,10 @@ Copy your configuration code from your clickstream solution web console, the con
 import 'package:clickstream_analytics/clickstream_analytics.dart';
 
 final analytics = ClickstreamAnalytics();
-analytics.init({
-   appId: "your appId",
-   endpoint: "https://example.com/collect"
-});
+analytics.init(
+  appId: "your appId",
+  endpoint: "https://example.com/collect"
+);
 ```
 
 Please note：
