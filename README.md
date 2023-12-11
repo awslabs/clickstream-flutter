@@ -6,7 +6,7 @@ Clickstream Flutter SDK can help you easily collect and report events from your 
 
 The SDK relies on the [Clickstream Android SDK](https://github.com/awslabs/clickstream-android) and [Clickstream Swift SDK](https://github.com/awslabs/clickstream-swift). Therefore, flutter SDK also supports automatically collect common user events and attributes (e.g., session start, first open). In addition, we've added easy-to-use APIs to simplify data collection in Flutter apps.
 
-Visit our [Documentation site](https://awslabs.github.io/clickstream-analytics-on-aws/en/sdk-manual/flutter/) to learn more about Clickstream Flutter SDK.
+Visit our [Documentation site](https://awslabs.github.io/clickstream-analytics-on-aws/en/latest/sdk-manual/flutter/) to learn more about Clickstream Flutter SDK.
 
 ## Integrate SDK
 
