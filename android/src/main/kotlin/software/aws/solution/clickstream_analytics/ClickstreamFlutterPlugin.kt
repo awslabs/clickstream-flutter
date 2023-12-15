@@ -32,6 +32,7 @@ import software.aws.solution.clickstream.AWSClickstreamPlugin
 import software.aws.solution.clickstream.ClickstreamAnalytics
 import software.aws.solution.clickstream.ClickstreamAttribute
 import software.aws.solution.clickstream.ClickstreamEvent
+import software.aws.solution.clickstream.ClickstreamItem
 import software.aws.solution.clickstream.ClickstreamUserAttribute
 import software.aws.solution.clickstream.client.util.ThreadUtil
 import java.util.Objects
@@ -159,6 +160,7 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
             arguments?.let {
                 val eventName = it["eventName"] as String
                 val attributes = it["attributes"] as HashMap<*, *>
+                val items = it["items"] as ArrayList<*>
                 val eventBuilder = ClickstreamEvent.builder().name(eventName)
                 for ((key, value) in attributes) {
                     if (value is String) {
@@ -172,6 +174,27 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
                     } else if (value is Long) {
                         eventBuilder.add(key.toString(), value)
                     }
+                }
+                if (items.size > 0) {
+                    val clickstreamItems = arrayOfNulls<ClickstreamItem>(items.size)
+                    for (index in 0 until items.size) {
+                        val builder = ClickstreamItem.builder()
+                        for ((key, value) in (items[index] as HashMap<*, *>)) {
+                            if (value is String) {
+                                builder.add(key.toString(), value)
+                            } else if (value is Double) {
+                                builder.add(key.toString(), value)
+                            } else if (value is Boolean) {
+                                builder.add(key.toString(), value)
+                            } else if (value is Int) {
+                                builder.add(key.toString(), value)
+                            } else if (value is Long) {
+                                builder.add(key.toString(), value)
+                            }
+                        }
+                        clickstreamItems[index] = builder.build()
+                    }
+                    eventBuilder.setItems(clickstreamItems)
                 }
                 ClickstreamAnalytics.recordEvent(eventBuilder.build())
             }

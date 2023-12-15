@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:clickstream_analytics/clickstream_analytics.dart';
+import 'package:clickstream_analytics/clickstream_analytics_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -54,10 +55,18 @@ class _MyAppState extends State<MyApp> {
               minLeadingWidth: 0,
             ),
             ListTile(
-              leading: const Icon(Icons.touch_app),
-              title: const Text('recordEvent'),
+              leading: const Icon(Icons.circle),
+              title: const Text('recordEventWithName'),
               onTap: () async {
                 analytics.record(name: "testEventWithName");
+                log("recorded testEvent with testEventWithName");
+              },
+              minLeadingWidth: 0,
+            ),
+            ListTile(
+              leading: const Icon(Icons.touch_app),
+              title: const Text('recordEventWithAttributes'),
+              onTap: () async {
                 analytics.record(name: "testEvent", attributes: {
                   "category": 'shoes',
                   "currency": 'CNY',
@@ -67,7 +76,47 @@ class _MyAppState extends State<MyApp> {
                   "boolValue": true,
                   "value": 279.9
                 });
-                log("recorded testEvent and testEventWithName");
+                log("recorded testEvent and attributes");
+              },
+              minLeadingWidth: 0,
+            ),
+            ListTile(
+              leading: const Icon(Icons.touch_app_outlined),
+              title: const Text('recordEventWithItem'),
+              onTap: () async {
+                var testItem1 = ClickstreamItem(
+                    id: "1",
+                    name: "testName1",
+                    brand: "Google",
+                    currency: "CNY",
+                    category: "book",
+                    locationId: "1",
+                    attributes: {
+                      "intValue": 21,
+                      "longValue": 888888888813991919,
+                      "doubleValue": 11.1234567890121213,
+                      "boolValue": true,
+                      "value": 279.9
+                    });
+                var testItem2 = ClickstreamItem(
+                    id: "2",
+                    name: "testName2",
+                    brand: "Sumsang",
+                    currency: "USD",
+                    category: "shoes",
+                    locationId: "2",
+                    attributes: {
+                      "intValue": 13,
+                      "longValue": 9999999913991919,
+                      "doubleValue": 22.1234567890121213,
+                      "boolValue": true,
+                      "value": 379.9
+                    });
+                analytics.record(
+                    name: "testRecordItem",
+                    attributes: {"testKey": "testValue"},
+                    items: [testItem1, testItem2]);
+                log("recorded testEvent with item");
               },
               minLeadingWidth: 0,
             ),
@@ -76,6 +125,14 @@ class _MyAppState extends State<MyApp> {
               title: const Text('setUserId'),
               onTap: () async {
                 analytics.setUserId("12345");
+                log("setUserId");
+              },
+              minLeadingWidth: 0,
+            ),
+            ListTile(
+              leading: const Icon(Icons.no_accounts),
+              title: const Text('setUserIdToNull'),
+              onTap: () async {
                 analytics.setUserId(null);
                 log("setUserId");
               },

@@ -6,7 +6,7 @@ Clickstream Flutter SDK can help you easily collect and report events from your 
 
 The SDK relies on the [Clickstream Android SDK](https://github.com/awslabs/clickstream-android) and [Clickstream Swift SDK](https://github.com/awslabs/clickstream-swift). Therefore, flutter SDK also supports automatically collect common user events and attributes (e.g., session start, first open). In addition, we've added easy-to-use APIs to simplify data collection in Flutter apps.
 
-Visit our [Documentation site](https://awslabs.github.io/clickstream-analytics-on-aws/en/sdk-manual/flutter/) to learn more about Clickstream Flutter SDK.
+Visit our [Documentation site](https://awslabs.github.io/clickstream-analytics-on-aws/en/latest/sdk-manual/flutter/) to learn more about Clickstream Flutter SDK.
 
 ## Integrate SDK
 
@@ -99,6 +99,33 @@ analytics.deleteGlobalAttributes(["level"]);
 ```
 
 It is recommended to set global attributes after each SDK initialization, global attributes will be included in all events that occur after it is set.
+
+#### Record event with items
+
+You can add the following code to log an event with an item. you can add custom item attribute in `attributes` object.
+
+**Note: Only pipelines from version 1.1+ can handle items with custom attribute.**
+
+```dart
+var itemBook = ClickstreamItem(
+    id: "123",
+    name: "Nature",
+    category: "book",
+    price: 99,
+    attributes: {
+      "book_publisher": "Nature Research"
+    }
+);
+
+analytics.record(
+    name: "view_item", 
+    attributes: {
+        "currency": 'USD',
+        "event_category": 'recommended'
+    }, 
+    items: [itemBook]
+);
+```
 
 #### Other configurations
 

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import 'package:clickstream_analytics/clickstream_analytics.dart';
+import 'package:clickstream_analytics/clickstream_analytics_item.dart';
 import 'package:clickstream_analytics/clickstream_analytics_method_channel.dart';
 import 'package:clickstream_analytics/clickstream_analytics_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -77,6 +78,29 @@ void main() {
         attributes: {"category": "shoes", "currency": "CNY", "value": 279.9});
     expect(result, isNotNull);
   });
+
+  test('record event with item', () async {
+    var itemBook = ClickstreamItem(
+        id: "123",
+        name: "Nature",
+        category: "book",
+        currency: "CNY",
+        price: 99,
+        attributes: {"book_publisher": "Nature Research"});
+    var itemShoes = ClickstreamItem(
+        id: "124",
+        name: "Nike",
+        category: "shoes",
+        price: 65,
+        currency: "USD",
+        attributes: {"place_of_origin": "USA"});
+    var result = analytics.record(
+        name: "cart_view",
+        attributes: {"_traffic_source_name": "Summer promotion"},
+        items: [itemBook, itemShoes]);
+    expect(result, isNotNull);
+  });
+
   test('setUserId', () async {
     var result = analytics.setUserId("11234");
     expect(result, isNotNull);
