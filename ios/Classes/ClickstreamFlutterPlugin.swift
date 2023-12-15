@@ -76,8 +76,17 @@ public class ClickstreamFlutterPlugin: NSObject, FlutterPlugin {
     func recordEvent(_ arguments: [String: Any]) {
         let eventName = arguments["eventName"] as! String
         let attributes = arguments["attributes"] as! [String: Any]
+        let items = arguments["items"] as! [[String: Any]]
         if attributes.count > 0 {
-            ClickstreamAnalytics.recordEvent(eventName, getClickstreamAttributes(attributes))
+            if items.count > 0 {
+                var clickstreamItems: [ClickstreamAttribute] = []
+                for itemObject in items {
+                    clickstreamItems.append(getClickstreamAttributes(itemObject))
+                }
+                ClickstreamAnalytics.recordEvent(eventName, getClickstreamAttributes(attributes), clickstreamItems)
+            } else {
+                ClickstreamAnalytics.recordEvent(eventName, getClickstreamAttributes(attributes))
+            }
         } else {
             ClickstreamAnalytics.recordEvent(eventName)
         }

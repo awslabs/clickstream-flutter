@@ -100,6 +100,33 @@ analytics.deleteGlobalAttributes(["level"]);
 
 It is recommended to set global attributes after each SDK initialization, global attributes will be included in all events that occur after it is set.
 
+#### Record event with items
+
+You can add the following code to log an event with an item. you can add custom item attribute in `attributes` object.
+
+**Note: Only pipelines from version 1.1+ can handle items with custom attribute.**
+
+```dart
+var itemBook = ClickstreamItem(
+    id: "123",
+    name: "Nature",
+    category: "book",
+    price: 99,
+    attributes: {
+      "book_publisher": "Nature Research"
+    }
+);
+
+analytics.record(
+    name: "view_item", 
+    attributes: {
+        "currency": 'USD',
+        "event_category": 'recommended'
+    }, 
+    items: [itemBook]
+);
+```
+
 #### Other configurations
 
 In addition to the required `appId` and `endpoint`, you can configure other information to get more customized usage:

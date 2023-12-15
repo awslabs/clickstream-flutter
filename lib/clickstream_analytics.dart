@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import 'clickstream_analytics_item.dart';
 import 'clickstream_analytics_platform_interface.dart';
 
 class ClickstreamAnalytics {
@@ -32,9 +33,20 @@ class ClickstreamAnalytics {
   }
 
   Future<void> record(
-      {required String name, Map<String, Object?>? attributes}) {
-    return ClickstreamInterface.instance
-        .record({"eventName": name, "attributes": attributes ?? {}});
+      {required String name,
+      Map<String, Object?>? attributes,
+      List<ClickstreamItem>? items}) {
+    var itemArray = [];
+    if (items != null) {
+      for (ClickstreamItem item in items) {
+        itemArray.add(item.toMap());
+      }
+    }
+    return ClickstreamInterface.instance.record({
+      "eventName": name,
+      "attributes": attributes ?? {},
+      "items": itemArray
+    });
   }
 
   Future<void> setUserId(String? userId) {
