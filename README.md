@@ -1,4 +1,7 @@
 # AWS Solution Clickstream Analytics SDK for Flutter
+[![clickstream-flutter-test](https://github.com/awslabs/clickstream-flutter/actions/workflows/test.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/test.yml) [![clickstream-flutter-release](https://github.com/awslabs/clickstream-flutter/actions/workflows/release.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/release.yml) [![clickstream-flutter-build-android](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-android.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-android.yml) [![clickstream-flutter-build-ios](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-ios.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-ios.yml) [![pub package](https://img.shields.io/pub/v/clickstream_analytics.svg)](https://pub.dev/packages/clickstream_analytics) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+
+
 
 ## Introduction
 
