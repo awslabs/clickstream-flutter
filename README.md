@@ -2,7 +2,6 @@
 [![clickstream-flutter-test](https://github.com/awslabs/clickstream-flutter/actions/workflows/test.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/test.yml) [![clickstream-flutter-release](https://github.com/awslabs/clickstream-flutter/actions/workflows/release.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/release.yml) [![clickstream-flutter-build-android](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-android.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-android.yml) [![clickstream-flutter-build-ios](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-ios.yml/badge.svg)](https://github.com/awslabs/clickstream-flutter/actions/workflows/build-ios.yml) [![pub package](https://img.shields.io/pub/v/clickstream_analytics.svg)](https://pub.dev/packages/clickstream_analytics) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 
-
 ## Introduction
 
 Clickstream Flutter SDK can help you easily collect and report events from your mobile app to AWS. This SDK is part of an AWS solution - [Clickstream Analytics on AWS](https://github.com/awslabs/clickstream-analytics-on-aws), which provisions data pipeline to ingest and process event data into AWS services such as S3, Redshift.
@@ -90,14 +89,30 @@ Current login user's attributes will be cached in disk, so the next time app lau
 
 #### Add global attribute
 
-```dart
-analytics.addGlobalAttributes({
-  "_traffic_source_medium": "Search engine",
-  "_traffic_source_name": "Summer promotion",
-  "level": 10
-});
+1. Add global attributes when initializing the SDK
 
-// delete global attribute
+   ```dart
+   analytics.init({
+     appId: "your appId",
+     endpoint: "https://example.com/collect",
+     globalAttributes: {
+       "_traffic_source_medium": "Search engine",
+       "_traffic_source_name": "Summer promotion",
+     }
+   });
+   ```
+
+2. Add global attributes after initializing the SDK
+   ```dart
+   analytics.addGlobalAttributes({
+     "_traffic_source_medium": "Search engine",
+     "_traffic_source_name": "Summer promotion",
+     "level": 10
+   });
+   ```
+
+#### Delete global attribute
+```
 analytics.deleteGlobalAttributes(["level"]);
 ```
 
@@ -123,10 +138,26 @@ var itemBook = ClickstreamItem(
 analytics.record(
     name: "view_item", 
     attributes: {
-        "currency": 'USD',
-        "event_category": 'recommended'
+        "currency": "USD",
+        "event_category": "recommended"
     }, 
     items: [itemBook]
+);
+```
+
+#### Record Screen View events manually
+
+By default, SDK will automatically track the preset `_screen_view` event when Android Activity triggers `onResume` or iOS ViewController triggers `viewDidAppear`.
+
+You can also manually record screen view events whether automatic screen view tracking is enabled, add the following code to record a screen view event with two attributes.
+
+* `screenName` Required. Your screen's name.
+* `screenUniqueId` Optional. Set the id of your Widget. If you do not set, the SDK will set a default value based on the hashcode of the current Activity or ViewController.
+
+```dart
+analytics.recordScreenView(
+  screenName: 'Main',
+  screenUniqueId: '123adf'
 );
 ```
 
@@ -146,7 +177,10 @@ analytics.init(
   isTrackUserEngagementEvents: true,
   isTrackAppExceptionEvents: false,
   authCookie: "your auth cookie",
-  sessionTimeoutDuration: 1800000
+  sessionTimeoutDuration: 1800000,
+  globalAttributes: {
+    "_traffic_source_medium": "Search engine",
+  },
 );
 ```
 
@@ -162,6 +196,7 @@ Here is an explanation of each option:
 - **isTrackAppExceptionEvents**: whether auto track exception event in app, default is `false`
 - **authCookie**: your auth cookie for AWS application load balancer auth cookie.
 - **sessionTimeoutDuration**: the duration for session timeout millisecond, default is 1800000
+- **globalAttributes**: the global attributes when initializing the SDK.
 
 #### Configuration update
 
@@ -177,7 +212,6 @@ analytics.updateConfigure(
     isTrackScreenViewEvents: false
     isTrackUserEngagementEvents: false,
     isTrackAppExceptionEvents: false,
-    sessionTimeoutDuration: 100000,
     authCookie: "test cookie");
 ```
 

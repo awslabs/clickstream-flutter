@@ -67,6 +67,37 @@ void main() {
     expect(result, true);
   });
 
+  test('init SDK with global attributes', () async {
+    var result = await analytics.init(
+        appId: 'testApp',
+        endpoint: "https://example.com/collect",
+        globalAttributes: {
+          "channel": "Samsung",
+          "Class": 5,
+          "isTrue": true,
+          "Score": 24.32
+        });
+    expect(result, true);
+  });
+
+  test('init SDK with all configuration', () async {
+    var result = await analytics.init(
+        appId: 'testApp',
+        endpoint: "https://example.com/collect",
+        isLogEvents: true,
+        isCompressEvents: false,
+        sessionTimeoutDuration: 150000,
+        sendEventsInterval: 60000,
+        authCookie: 'test auth cookie',
+        isTrackScreenViewEvents: false,
+        isTrackUserEngagementEvents: false,
+        isTrackAppExceptionEvents: true,
+        globalAttributes: {
+          "channel": "Samsung",
+        });
+    expect(result, true);
+  });
+
   test('record event', () async {
     var result = analytics.record(name: "testEvent");
     expect(result, isNotNull);
@@ -98,6 +129,14 @@ void main() {
         name: "cart_view",
         attributes: {"_traffic_source_name": "Summer promotion"},
         items: [itemBook, itemShoes]);
+    expect(result, isNotNull);
+  });
+
+  test('record custom screen view event', () async {
+    var result = analytics.recordScreenView(
+        screenName: "MainPage",
+        screenUniqueId: 'a13cfe',
+        attributes: {"category": "shoes", "currency": "CNY", "value": 279.9});
     expect(result, isNotNull);
   });
 

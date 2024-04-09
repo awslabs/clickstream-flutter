@@ -17,9 +17,7 @@ package software.aws.solution.clickstream_analytics
 import android.app.Activity
 import com.amazonaws.logging.Log
 import com.amazonaws.logging.LogFactory
-import com.amplifyframework.AmplifyException
 import com.amplifyframework.core.Amplify
-import com.amplifyframework.core.AmplifyConfiguration
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -27,10 +25,9 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import org.json.JSONObject
-import software.aws.solution.clickstream.AWSClickstreamPlugin
 import software.aws.solution.clickstream.ClickstreamAnalytics
 import software.aws.solution.clickstream.ClickstreamAttribute
+import software.aws.solution.clickstream.ClickstreamConfiguration
 import software.aws.solution.clickstream.ClickstreamEvent
 import software.aws.solution.clickstream.ClickstreamItem
 import software.aws.solution.clickstream.ClickstreamUserAttribute
@@ -64,52 +61,19 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
     override fun onMethodCall(call: MethodCall, result: Result) {
         val arguments = call.arguments() as HashMap<String, Any>?
         when (call.method) {
-            "init" -> {
-                result.success(initSDK(arguments!!))
-            }
-
-            "record" -> {
-                recordEvent(arguments)
-            }
-
-            "setUserId" -> {
-                setUserId(arguments)
-            }
-
-            "setUserAttributes" -> {
-                setUserAttributes(arguments)
-            }
-
-            "setGlobalAttributes" -> {
-                setGlobalAttributes(arguments)
-            }
-
-            "deleteGlobalAttributes" -> {
-                deleteGlobalAttributes(arguments)
-            }
-
-            "updateConfigure" -> {
-                updateConfigure(arguments)
-            }
-
-            "flushEvents" -> {
-                ClickstreamAnalytics.flushEvents()
-            }
-
-            "disable" -> {
-                ClickstreamAnalytics.disable()
-            }
-
-            "enable" -> {
-                ClickstreamAnalytics.enable()
-            }
-
-            else -> {
-                result.notImplemented()
-            }
+            "init" -> result.success(initSDK(arguments!!))
+            "record" -> recordEvent(arguments)
+            "setUserId" -> setUserId(arguments)
+            "setUserAttributes" -> setUserAttributes(arguments)
+            "addGlobalAttributes" -> addGlobalAttributes(arguments)
+            "deleteGlobalAttributes" -> deleteGlobalAttributes(arguments)
+            "updateConfigure" -> updateConfigure(arguments)
+            "flushEvents" -> ClickstreamAnalytics.flushEvents()
+            "disable" -> ClickstreamAnalytics.disable()
+            "enable" -> ClickstreamAnalytics.enable()
+            else -> result.notImplemented()
         }
     }
-
 
     private fun initSDK(arguments: HashMap<String, Any>): Boolean {
         if (getIsInitialized()) return false
@@ -119,28 +83,13 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
                 log.error("Clickstream SDK initialization failed, please initialize in the main thread")
                 return false
             }
-            val amplifyObject = JSONObject()
-            val analyticsObject = JSONObject()
-            val pluginsObject = JSONObject()
-            val awsClickstreamPluginObject = JSONObject()
-            awsClickstreamPluginObject.put("appId", arguments["appId"])
-            awsClickstreamPluginObject.put("endpoint", arguments["endpoint"])
-            pluginsObject.put("awsClickstreamPlugin", awsClickstreamPluginObject)
-            analyticsObject.put("plugins", pluginsObject)
-            amplifyObject.put("analytics", analyticsObject)
-            val configure = AmplifyConfiguration.fromJson(amplifyObject)
-            try {
-                Amplify.addPlugin<AWSClickstreamPlugin>(AWSClickstreamPlugin(context))
-                Amplify.configure(configure, context)
-            } catch (exception: AmplifyException) {
-                log.error("Clickstream SDK initialization failed with error: " + exception.message)
-                return false
-            }
             val sessionTimeoutDuration = arguments["sessionTimeoutDuration"]
                 .let { (it as? Int)?.toLong() ?: (it as Long) }
             val sendEventsInterval = arguments["sendEventsInterval"]
                 .let { (it as? Int)?.toLong() ?: (it as Long) }
-            ClickstreamAnalytics.getClickStreamConfiguration()
+            val configuration = ClickstreamConfiguration()
+                .withAppId(arguments["appId"] as String)
+                .withEndpoint(arguments["endpoint"] as String)
                 .withLogEvents(arguments["isLogEvents"] as Boolean)
                 .withTrackScreenViewEvents(arguments["isTrackScreenViewEvents"] as Boolean)
                 .withTrackUserEngagementEvents(arguments["isTrackUserEngagementEvents"] as Boolean)
@@ -149,7 +98,28 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
                 .withSessionTimeoutDuration(sessionTimeoutDuration)
                 .withCompressEvents(arguments["isCompressEvents"] as Boolean)
                 .withAuthCookie(arguments["authCookie"] as String)
-            return true
+
+            (arguments["globalAttributes"] as? HashMap<*, *>)?.takeIf { it.isNotEmpty() }
+                ?.let { attributes ->
+                    val globalAttributes = ClickstreamAttribute.builder()
+                    for ((key, value) in attributes) {
+                        when (value) {
+                            is String -> globalAttributes.add(key.toString(), value)
+                            is Double -> globalAttributes.add(key.toString(), value)
+                            is Boolean -> globalAttributes.add(key.toString(), value)
+                            is Int -> globalAttributes.add(key.toString(), value)
+                            is Long -> globalAttributes.add(key.toString(), value)
+                        }
+                    }
+                    configuration.withInitialGlobalAttributes(globalAttributes.build())
+                }
+            return try {
+                ClickstreamAnalytics.init(context, configuration)
+                true
+            } catch (exception: Exception) {
+                log.error("Clickstream SDK initialization failed with error: " + exception.message)
+                false
+            }
         } else {
             return false
         }
@@ -163,16 +133,12 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
                 val items = it["items"] as ArrayList<*>
                 val eventBuilder = ClickstreamEvent.builder().name(eventName)
                 for ((key, value) in attributes) {
-                    if (value is String) {
-                        eventBuilder.add(key.toString(), value)
-                    } else if (value is Double) {
-                        eventBuilder.add(key.toString(), value)
-                    } else if (value is Boolean) {
-                        eventBuilder.add(key.toString(), value)
-                    } else if (value is Int) {
-                        eventBuilder.add(key.toString(), value)
-                    } else if (value is Long) {
-                        eventBuilder.add(key.toString(), value)
+                    when (value) {
+                        is String -> eventBuilder.add(key.toString(), value)
+                        is Double -> eventBuilder.add(key.toString(), value)
+                        is Boolean -> eventBuilder.add(key.toString(), value)
+                        is Int -> eventBuilder.add(key.toString(), value)
+                        is Long -> eventBuilder.add(key.toString(), value)
                     }
                 }
                 if (items.size > 0) {
@@ -180,16 +146,12 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
                     for (index in 0 until items.size) {
                         val builder = ClickstreamItem.builder()
                         for ((key, value) in (items[index] as HashMap<*, *>)) {
-                            if (value is String) {
-                                builder.add(key.toString(), value)
-                            } else if (value is Double) {
-                                builder.add(key.toString(), value)
-                            } else if (value is Boolean) {
-                                builder.add(key.toString(), value)
-                            } else if (value is Int) {
-                                builder.add(key.toString(), value)
-                            } else if (value is Long) {
-                                builder.add(key.toString(), value)
+                            when (value) {
+                                is String -> builder.add(key.toString(), value)
+                                is Double -> builder.add(key.toString(), value)
+                                is Boolean -> builder.add(key.toString(), value)
+                                is Int -> builder.add(key.toString(), value)
+                                is Long -> builder.add(key.toString(), value)
                             }
                         }
                         clickstreamItems[index] = builder.build()
@@ -217,36 +179,28 @@ class ClickstreamFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware
         arguments?.let {
             val builder = ClickstreamUserAttribute.Builder()
             for ((key, value) in arguments) {
-                if (value is String) {
-                    builder.add(key, value)
-                } else if (value is Double) {
-                    builder.add(key, value)
-                } else if (value is Boolean) {
-                    builder.add(key, value)
-                } else if (value is Int) {
-                    builder.add(key, value)
-                } else if (value is Long) {
-                    builder.add(key, value)
+                when (value) {
+                    is String -> builder.add(key, value)
+                    is Double -> builder.add(key, value)
+                    is Boolean -> builder.add(key, value)
+                    is Int -> builder.add(key, value)
+                    is Long -> builder.add(key, value)
                 }
             }
             ClickstreamAnalytics.addUserAttributes(builder.build())
         }
     }
 
-    private fun setGlobalAttributes(arguments: java.util.HashMap<String, Any>?) {
+    private fun addGlobalAttributes(arguments: java.util.HashMap<String, Any>?) {
         arguments?.let {
             val builder = ClickstreamAttribute.Builder()
             for ((key, value) in arguments) {
-                if (value is String) {
-                    builder.add(key, value)
-                } else if (value is Double) {
-                    builder.add(key, value)
-                } else if (value is Boolean) {
-                    builder.add(key, value)
-                } else if (value is Int) {
-                    builder.add(key, value)
-                } else if (value is Long) {
-                    builder.add(key, value)
+                when (value) {
+                    is String -> builder.add(key, value)
+                    is Double -> builder.add(key, value)
+                    is Boolean -> builder.add(key, value)
+                    is Int -> builder.add(key, value)
+                    is Long -> builder.add(key, value)
                 }
             }
             ClickstreamAnalytics.addGlobalAttributes(builder.build())

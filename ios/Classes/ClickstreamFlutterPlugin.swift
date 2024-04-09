@@ -18,8 +18,6 @@ public class ClickstreamFlutterPlugin: NSObject, FlutterPlugin {
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "getPlatformVersion":
-            result("iOS " + UIDevice.current.systemVersion)
         case "init":
             result(initSDK(call.arguments as! [String: Any]))
         case "record":
@@ -47,25 +45,25 @@ public class ClickstreamFlutterPlugin: NSObject, FlutterPlugin {
 
     func initSDK(_ arguments: [String: Any]) -> Bool {
         do {
-            let plugins: [String: JSONValue] = [
-                "awsClickstreamPlugin": [
-                    "appId": JSONValue.string(arguments["appId"] as! String),
-                    "endpoint": JSONValue.string(arguments["endpoint"] as! String),
-                    "isCompressEvents": JSONValue.boolean(arguments["isCompressEvents"] as! Bool),
-                    "autoFlushEventsInterval": JSONValue.number(arguments["sendEventsInterval"] as! Double),
-                    "isTrackAppExceptionEvents": JSONValue.boolean(arguments["isTrackAppExceptionEvents"] as! Bool)
-                ]
-            ]
-            let analyticsConfiguration = AnalyticsCategoryConfiguration(plugins: plugins)
-            let config = AmplifyConfiguration(analytics: analyticsConfiguration)
-            try Amplify.add(plugin: AWSClickstreamPlugin())
-            try Amplify.configure(config)
-            let configure = try ClickstreamAnalytics.getClickstreamConfiguration()
-            configure.isLogEvents = arguments["isLogEvents"] as! Bool
-            configure.isTrackScreenViewEvents = arguments["isTrackScreenViewEvents"] as! Bool
-            configure.isTrackUserEngagementEvents = arguments["isTrackUserEngagementEvents"] as! Bool
-            configure.sessionTimeoutDuration = arguments["sessionTimeoutDuration"] as! Int64
-            configure.authCookie = arguments["authCookie"] as? String
+            let configuration = ClickstreamConfiguration()
+                .withAppId(arguments["appId"] as! String)
+                .withEndpoint(arguments["endpoint"] as! String)
+                .withLogEvents(arguments["isLogEvents"] as! Bool)
+                .withTrackScreenViewEvents(arguments["isTrackScreenViewEvents"] as! Bool)
+                .withTrackUserEngagementEvents(arguments["isTrackUserEngagementEvents"] as! Bool)
+                .withTrackAppExceptionEvents(arguments["isTrackAppExceptionEvents"] as! Bool)
+                .withSendEventInterval(arguments["sendEventsInterval"] as! Int)
+                .withSessionTimeoutDuration(arguments["sessionTimeoutDuration"] as! Int64)
+                .withCompressEvents(arguments["isCompressEvents"] as! Bool)
+                .withAuthCookie(arguments["authCookie"] as! String)
+            if arguments["globalAttributes"] != nil {
+                let attributes = arguments["globalAttributes"] as! [String: Any]
+                if attributes.count > 0 {
+                    let globalAttributes = getClickstreamAttributes(attributes)
+                    _ = configuration.withInitialGlobalAttributes(globalAttributes)
+                }
+            }
+            try ClickstreamAnalytics.initSDK(configuration)
             return true
         } catch {
             log.error("Fail to initialize ClickstreamAnalytics: \(error)")
