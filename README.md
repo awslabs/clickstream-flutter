@@ -157,7 +157,8 @@ You can also manually record screen view events whether automatic screen view tr
 ```dart
 analytics.recordScreenView(
   screenName: 'Main',
-  screenUniqueId: '123adf'
+  screenUniqueId: '123adf',
+  attributes: { ... }
 );
 ```
 
