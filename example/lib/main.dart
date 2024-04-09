@@ -24,12 +24,30 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    initClickstream();
   }
 
   void log(String message) {
     if (kDebugMode) {
       print(message);
     }
+  }
+
+  Future<void> initClickstream() async {
+    bool result = await analytics.init(
+        appId: "shopping",
+        endpoint: testEndpoint,
+        isLogEvents: true,
+        isTrackScreenViewEvents: true,
+        isCompressEvents: false,
+        sessionTimeoutDuration: 30000,
+        globalAttributes: {
+          "channel": "Samsung",
+          "Class": 5,
+          "isTrue": true,
+          "Score": 24.32
+        });
+    log("init SDK result is:$result");
   }
 
   @override
@@ -45,12 +63,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.not_started_outlined),
               title: const Text('initSDK'),
               onTap: () async {
-                bool result = await analytics.init(
-                    appId: "shopping",
-                    endpoint: testEndpoint,
-                    isLogEvents: true,
-                    isCompressEvents: false);
-                log("init SDK result is:$result");
+                initClickstream();
               },
               minLeadingWidth: 0,
             ),
@@ -77,6 +90,18 @@ class _MyAppState extends State<MyApp> {
                   "value": 279.9
                 });
                 log("recorded testEvent and attributes");
+              },
+              minLeadingWidth: 0,
+            ),
+            ListTile(
+              leading: const Icon(Icons.remove_red_eye_outlined),
+              title: const Text('recordCustomScreenViewEvents'),
+              onTap: () async {
+                analytics.recordScreenView(
+                    screenName: 'Main',
+                    screenUniqueId: '123adf',
+                    attributes: {'screenClass': "example/lib/main.dart"});
+                log("recorded an custom screen view event");
               },
               minLeadingWidth: 0,
             ),
@@ -155,7 +180,7 @@ class _MyAppState extends State<MyApp> {
               title: const Text('addGlobalAttributes'),
               onTap: () async {
                 analytics.addGlobalAttributes({
-                  "_channel": "Samsung",
+                  "channel": "Samsung",
                   "Class": 5,
                   "isTrue": true,
                   "Score": 24.32
@@ -168,8 +193,8 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.delete_rounded),
               title: const Text('deleteGlobalAttributes'),
               onTap: () async {
-                analytics.deleteGlobalAttributes(["Score", "_channel"]);
-                log("deleteGlobalAttributes Score and _channel");
+                analytics.deleteGlobalAttributes(["Score", "channel"]);
+                log("deleteGlobalAttributes Score and channel");
               },
               minLeadingWidth: 0,
             ),
@@ -180,7 +205,6 @@ class _MyAppState extends State<MyApp> {
                 analytics.updateConfigure(
                     isLogEvents: true,
                     isCompressEvents: false,
-                    sessionTimeoutDuration: 100000,
                     isTrackUserEngagementEvents: false,
                     isTrackAppExceptionEvents: false,
                     authCookie: "test cookie",

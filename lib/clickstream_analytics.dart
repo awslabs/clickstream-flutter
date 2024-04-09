@@ -16,6 +16,7 @@ class ClickstreamAnalytics {
     int sendEventsInterval = 10000,
     int sessionTimeoutDuration = 1800000,
     String authCookie = "",
+    Map<String, Object?>? globalAttributes,
   }) {
     Map<String, Object?> initConfig = {
       'appId': appId,
@@ -27,7 +28,8 @@ class ClickstreamAnalytics {
       'isTrackAppExceptionEvents': isTrackAppExceptionEvents,
       'sendEventsInterval': sendEventsInterval,
       'sessionTimeoutDuration': sessionTimeoutDuration,
-      'authCookie': authCookie
+      'authCookie': authCookie,
+      'globalAttributes': globalAttributes
     };
     return ClickstreamInterface.instance.init(initConfig);
   }
@@ -46,6 +48,17 @@ class ClickstreamAnalytics {
       "eventName": name,
       "attributes": attributes ?? {},
       "items": itemArray
+    });
+  }
+
+  Future<void> recordScreenView(
+      {required String screenName,
+      String? screenUniqueId,
+      Map<String, Object?>? attributes}) {
+    return record(name: '_screen_view', attributes: {
+      '_screen_name': screenName,
+      if (screenUniqueId != null) '_screen_unique_id': screenUniqueId,
+      if (attributes != null) ...attributes,
     });
   }
 
