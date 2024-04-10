@@ -7,3 +7,4 @@ ios/Clickstream/*
 !ios/Clickstream/Sources
 example/integration_test
 example/test
+release.sh
