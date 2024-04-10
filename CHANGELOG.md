@@ -1,3 +1,7 @@
+## 0.3.0
+
+* feat: add record screen view api
+
 ## 0.2.0
 
 * feat: support record items with custom attributes.
