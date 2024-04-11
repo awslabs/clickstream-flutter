@@ -72,7 +72,28 @@ void main() {
         appId: 'testApp',
         endpoint: "https://example.com/collect",
         globalAttributes: {
-          "channel": "Samsung",
+          Attr.APP_INSTALL_CHANNEL: "amazon_store",
+          "Class": 5,
+          "isTrue": true,
+          "Score": 24.32
+        });
+    expect(result, true);
+  });
+
+  test('init SDK with traffic source using global attributes', () async {
+    var result = await analytics.init(
+        appId: 'testApp',
+        endpoint: "https://example.com/collect",
+        globalAttributes: {
+          Attr.TRAFFIC_SOURCE_SOURCE: "amazon",
+          Attr.TRAFFIC_SOURCE_MEDIUM: "cpc",
+          Attr.TRAFFIC_SOURCE_CAMPAIGN: "summer_promotion",
+          Attr.TRAFFIC_SOURCE_CAMPAIGN_ID: "summer_promotion_01",
+          Attr.TRAFFIC_SOURCE_TERM: "running_shoes",
+          Attr.TRAFFIC_SOURCE_CONTENT: "banner_ad_1",
+          Attr.TRAFFIC_SOURCE_CLID: "amazon_ad_123",
+          Attr.TRAFFIC_SOURCE_CLID_PLATFORM: "amazon_ads",
+          Attr.APP_INSTALL_CHANNEL: "amazon_store",
           "Class": 5,
           "isTrue": true,
           "Score": 24.32
@@ -93,7 +114,7 @@ void main() {
         isTrackUserEngagementEvents: false,
         isTrackAppExceptionEvents: true,
         globalAttributes: {
-          "channel": "Samsung",
+          Attr.APP_INSTALL_CHANNEL: "amazon_store",
         });
     expect(result, true);
   });
@@ -125,10 +146,14 @@ void main() {
         price: 65,
         currency: "USD",
         attributes: {"place_of_origin": "USA"});
-    var result = analytics.record(
-        name: "cart_view",
-        attributes: {"_traffic_source_name": "Summer promotion"},
-        items: [itemBook, itemShoes]);
+    var result = analytics.record(name: "cart_view", attributes: {
+      Attr.TRAFFIC_SOURCE_CAMPAIGN: "Summer promotion",
+      Attr.VALUE: 164,
+      Attr.CURRENCY: "USD"
+    }, items: [
+      itemBook,
+      itemShoes
+    ]);
     expect(result, isNotNull);
   });
 
@@ -155,7 +180,7 @@ void main() {
 
   test('setGlobalAttributes', () async {
     var result = analytics.addGlobalAttributes(
-        {"channel": "Play Store", "level": 5.1, "class": 6});
+        {Attr.APP_INSTALL_CHANNEL: "amazon_store", "level": 5.1, "class": 6});
     var result1 = analytics.addGlobalAttributes({});
     expect(result, isNotNull);
     expect(result1, isNotNull);

@@ -1,3 +1,7 @@
+## 0.4.0
+
+* feat: add preset traffic source attributes
+
 ## 0.3.0
 
 * feat: add record screen view api
