@@ -201,7 +201,8 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.delete_rounded),
               title: const Text('deleteGlobalAttributes'),
               onTap: () async {
-                analytics.deleteGlobalAttributes(["Score", Attr.APP_INSTALL_CHANNEL]);
+                analytics.deleteGlobalAttributes(
+                    ["Score", Attr.APP_INSTALL_CHANNEL]);
                 log("deleteGlobalAttributes Score and channel");
               },
               minLeadingWidth: 0,
