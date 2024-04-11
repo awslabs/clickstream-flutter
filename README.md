@@ -80,7 +80,7 @@ analytics.setUserId(null);
 
 ```dart
 analytics.setUserAttributes({
-  "userName":"carl",
+  "userName": "carl",
   "userAge": 22
 });
 ```
@@ -90,14 +90,22 @@ Current login user's attributes will be cached in disk, so the next time app lau
 #### Add global attribute
 
 1. Add global attributes when initializing the SDK
-
+   
+   The following example code shows how to add traffic source fields as global attributes when initializing the SDK.
    ```dart
    analytics.init({
      appId: "your appId",
      endpoint: "https://example.com/collect",
      globalAttributes: {
-       "_traffic_source_medium": "Search engine",
-       "_traffic_source_name": "Summer promotion",
+       Attr.TRAFFIC_SOURCE_SOURCE: "amazon",
+       Attr.TRAFFIC_SOURCE_MEDIUM: "cpc",
+       Attr.TRAFFIC_SOURCE_CAMPAIGN: "summer_promotion",
+       Attr.TRAFFIC_SOURCE_CAMPAIGN_ID: "summer_promotion_01",
+       Attr.TRAFFIC_SOURCE_TERM: "running_shoes",
+       Attr.TRAFFIC_SOURCE_CONTENT: "banner_ad_1",
+       Attr.TRAFFIC_SOURCE_CLID: "amazon_ad_123",
+       Attr.TRAFFIC_SOURCE_CLID_PLATFORM: "amazon_ads",
+       Attr.APP_INSTALL_CHANNEL: "amazon_store"
      }
    });
    ```
@@ -105,8 +113,7 @@ Current login user's attributes will be cached in disk, so the next time app lau
 2. Add global attributes after initializing the SDK
    ```dart
    analytics.addGlobalAttributes({
-     "_traffic_source_medium": "Search engine",
-     "_traffic_source_name": "Summer promotion",
+     Attr.TRAFFIC_SOURCE_MEDIUM: "Search engine",
      "level": 10
    });
    ```
@@ -138,7 +145,8 @@ var itemBook = ClickstreamItem(
 analytics.record(
     name: "view_item", 
     attributes: {
-        "currency": "USD",
+        Attr.VALUE: 99,
+        Attr.CURRENCY: "USD"
         "event_category": "recommended"
     }, 
     items: [itemBook]

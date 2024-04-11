@@ -42,7 +42,15 @@ class _MyAppState extends State<MyApp> {
         isCompressEvents: false,
         sessionTimeoutDuration: 30000,
         globalAttributes: {
-          "channel": "Samsung",
+          Attr.TRAFFIC_SOURCE_SOURCE: "amazon",
+          Attr.TRAFFIC_SOURCE_MEDIUM: "cpc",
+          Attr.TRAFFIC_SOURCE_CAMPAIGN: "summer_promotion",
+          Attr.TRAFFIC_SOURCE_CAMPAIGN_ID: "summer_promotion_01",
+          Attr.TRAFFIC_SOURCE_TERM: "running_shoes",
+          Attr.TRAFFIC_SOURCE_CONTENT: "banner_ad_1",
+          Attr.TRAFFIC_SOURCE_CLID: "amazon_ad_123",
+          Attr.TRAFFIC_SOURCE_CLID_PLATFORM: "amazon_ads",
+          Attr.APP_INSTALL_CHANNEL: "amazon_store",
           "Class": 5,
           "isTrue": true,
           "Score": 24.32
@@ -180,7 +188,7 @@ class _MyAppState extends State<MyApp> {
               title: const Text('addGlobalAttributes'),
               onTap: () async {
                 analytics.addGlobalAttributes({
-                  "channel": "Samsung",
+                  Attr.APP_INSTALL_CHANNEL: "amazon_store",
                   "Class": 5,
                   "isTrue": true,
                   "Score": 24.32
@@ -193,7 +201,7 @@ class _MyAppState extends State<MyApp> {
               leading: const Icon(Icons.delete_rounded),
               title: const Text('deleteGlobalAttributes'),
               onTap: () async {
-                analytics.deleteGlobalAttributes(["Score", "channel"]);
+                analytics.deleteGlobalAttributes(["Score", Attr.APP_INSTALL_CHANNEL]);
                 log("deleteGlobalAttributes Score and channel");
               },
               minLeadingWidth: 0,

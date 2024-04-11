@@ -119,3 +119,19 @@ class ClickstreamAnalytics {
     return ClickstreamInterface.instance.enable();
   }
 }
+
+class Attr {
+  static const String TRAFFIC_SOURCE_SOURCE = '_traffic_source_source';
+  static const String TRAFFIC_SOURCE_MEDIUM = '_traffic_source_medium';
+  static const String TRAFFIC_SOURCE_CAMPAIGN = '_traffic_source_campaign';
+  static const String TRAFFIC_SOURCE_CAMPAIGN_ID =
+      '_traffic_source_campaign_id';
+  static const String TRAFFIC_SOURCE_TERM = '_traffic_source_term';
+  static const String TRAFFIC_SOURCE_CONTENT = '_traffic_source_content';
+  static const String TRAFFIC_SOURCE_CLID = '_traffic_source_clid';
+  static const String TRAFFIC_SOURCE_CLID_PLATFORM =
+      '_traffic_source_clid_platform';
+  static const String APP_INSTALL_CHANNEL = '_app_install_channel';
+  static const String VALUE = '_value';
+  static const String CURRENCY = '_currency';
+}
