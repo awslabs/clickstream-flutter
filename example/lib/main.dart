@@ -58,6 +58,18 @@ class _MyAppState extends State<MyApp> {
     log("init SDK result is:$result");
   }
 
+  Future<void> initClickstreamWithoutGlobalAttribute() async {
+    bool result = await analytics.init(
+      appId: "shopping",
+      endpoint: testEndpoint,
+      isLogEvents: true,
+      isTrackScreenViewEvents: true,
+      isCompressEvents: false,
+      sessionTimeoutDuration: 30000,
+    );
+    log("init SDK result is:$result");
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -72,6 +84,14 @@ class _MyAppState extends State<MyApp> {
               title: const Text('initSDK'),
               onTap: () async {
                 initClickstream();
+              },
+              minLeadingWidth: 0,
+            ),
+            ListTile(
+              leading: const Icon(Icons.not_started_sharp),
+              title: const Text('initSDKWithoutGlobalAttribute'),
+              onTap: () async {
+                initClickstreamWithoutGlobalAttribute();
               },
               minLeadingWidth: 0,
             ),

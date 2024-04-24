@@ -56,8 +56,7 @@ public class ClickstreamFlutterPlugin: NSObject, FlutterPlugin {
                 .withSessionTimeoutDuration(arguments["sessionTimeoutDuration"] as! Int64)
                 .withCompressEvents(arguments["isCompressEvents"] as! Bool)
                 .withAuthCookie(arguments["authCookie"] as! String)
-            if arguments["globalAttributes"] != nil {
-                let attributes = arguments["globalAttributes"] as! [String: Any]
+            if let attributes = arguments["globalAttributes"] as? [String: Any] {
                 if attributes.count > 0 {
                     let globalAttributes = getClickstreamAttributes(attributes)
                     _ = configuration.withInitialGlobalAttributes(globalAttributes)
