@@ -1,3 +1,11 @@
+## 0.4.2
+
+* fix: crash when converting invalid JSON object on Swift SDK
+
+## 0.4.1
+
+* fix: the issue when initialize SDK without global attribute
+
 ## 0.4.0
 
 * feat: add preset traffic source attributes
