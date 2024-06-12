@@ -1,6 +1,6 @@
 ## 0.4.2
 
-* fix: crash when converting invalid JSON object for Swift SDK
+* fix: crash when converting invalid JSON object on Swift SDK
 
 ## 0.4.1
 
