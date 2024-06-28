@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'clickstream_analytics'
-  s.version          = '0.4.2'
+  s.version          = '0.5.0'
   s.summary          = 'clickstream flutter SDK'
   s.description      = <<-DESC
 clickstream flutter SDK
