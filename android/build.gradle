@@ -52,7 +52,7 @@ android {
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
-        implementation 'software.aws.solution:clickstream:0.13.0'
+        implementation 'software.aws.solution:clickstream:0.14.0'
         implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.10"))
     }
 

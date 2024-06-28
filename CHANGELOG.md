@@ -1,3 +1,7 @@
+## 0.5.0
+
+* feat: bump Android SDK to v0.14.0 and bump Swift SDK to v0.12.4
+
 ## 0.4.2
 
 * fix: crash when converting invalid JSON object on Swift SDK
