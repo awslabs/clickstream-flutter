@@ -2,10 +2,10 @@ PODS:
   - Amplify (1.30.3):
     - Amplify/Default (= 1.30.3)
   - Amplify/Default (1.30.3)
-  - clickstream_analytics (0.0.1):
-    - clickstream_analytics/Clickstream (= 0.0.1)
+  - clickstream_analytics (0.4.2):
+    - clickstream_analytics/Clickstream (= 0.4.2)
     - Flutter
-  - clickstream_analytics/Clickstream (0.0.1):
+  - clickstream_analytics/Clickstream (0.4.2):
     - Amplify (= 1.30.3)
     - Flutter
     - GzipSwift (= 5.1.1)
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Amplify: 516e5da5f256f62841b6bc659e1644bc999d7b6e
-  clickstream_analytics: 22312ed8d353813f1f6847aecb4e04b62bdda478
+  clickstream_analytics: 5e40d5561a018d35c7595682f5b90e4b857565f9
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
   integration_test: 13825b8a9334a850581300559b8839134b124670
